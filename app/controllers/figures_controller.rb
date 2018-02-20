@@ -44,4 +44,12 @@ class FiguresController < ApplicationController
 	end# of post '/figures'
 
 
+	post '/figures/:id' do 
+		@figure = Figure.find(params[:id])
+		new_landmark = Landmark.create(name: params[:new_landmark])
+		@figure.landmarks << new_landmark	
+	  @figure.save
+		redirect :"/figures/#{@figure.id}"	
+	end
+
 end# of class

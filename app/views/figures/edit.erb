@@ -4,14 +4,13 @@
 <form action='/figures/<%= @figure.id %>' method='POST'>
 <p>New name?</p>
 <input type='text' name='figure[name]' id='figure_name'>
+<input type='hidden' id= 'id' value='<%= @figure.id %>'>
 <% @figure.titles.each do |title| %>
-<input type='checkbox' name='figure[title_ids][]' id='<%= title.id %>'>
+<p><%= title.name %></p>
+<input type='checkbox' name='figure[title_ids][]'> 
 <% end %>
 <p>New Landmark?</p>
 <input type='text' name='new_landmark'>
 
-
-
-
-
+<input type='submit' value='Edit Figure'>
 </form>
