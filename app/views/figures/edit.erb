@@ -9,6 +9,10 @@
 <p><%= title.name %></p>
 <input type='checkbox' name='figure[title_ids][]' <% 'checked' if @figure.title_ids.any?{|id| id == title.id} %>>  
 <% end %>
+<% Landmark.all.each do |landmark| %>
+<p><%= landmark.name %></p>
+<input type='checkbox' name='figure[landmark_ids][]' <% 'checked' if @figure.landmark_ids.any? {|id| id == landmark.id} %>>
+<% end %>
 <p>New Landmark?</p>
 <input type='text' name='new_landmark'>
 

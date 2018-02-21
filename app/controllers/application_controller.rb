@@ -9,6 +9,7 @@ class ApplicationController < Sinatra::Base
 				title_ids = params.first[1][:title_ids]
 				landmark_ids = params.first[1][:landmark_ids]
 				new_landmark = params[:new_landmark]
+				instance.name = params.first[1][:name]
 
 				if title_ids
 					title_ids.each {|id| instance.titles << Title.find(id)}			
