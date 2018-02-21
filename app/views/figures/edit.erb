@@ -5,9 +5,9 @@
 <p>New name?</p>
 <input type='text' name='figure[name]' id='figure_name'>
 <input type='hidden' id= 'id' value='<%= @figure.id %>'>
-<% @figure.titles.each do |title| %>
+<% Title.all.each do |title| %>
 <p><%= title.name %></p>
-<input type='checkbox' name='figure[title_ids][]'> 
+<input type='checkbox' name='figure[title_ids][]' <% 'checked' if @figure.title_ids.any?{|id| id == title.id} %>>  
 <% end %>
 <p>New Landmark?</p>
 <input type='text' name='new_landmark'>

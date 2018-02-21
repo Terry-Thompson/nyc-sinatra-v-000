@@ -24,31 +24,14 @@ class FiguresController < ApplicationController
 
 	post '/figures' do
 		@figure = Figure.find_or_create_by(name: params[:figure][:name])
-		title_ids = params[:figure][:title_ids]
-		landmark_ids = params[:figure][:landmark_ids]
-
-		if title_ids
-			title_ids.each {|id| @figure.titles << Title.find(id)}
-		elsif landmark_ids 
-			landmark_ids.each {|id| @figure.landmarks << Landmark.find(id)}
-		elsif !params[:title][:name].empty? 
-			@figure.titles << Title.find_or_create_by(name: params[:title][:name])  
-		elsif !params[:landmark][:name].empty? 
-			@landmark = Landmark.find_or_create_by(name: params[:landmark][:name])  
-			@figure.landmarks << @landmark 
-			@landmark.save
-		end# of if 
-
-		@figure.save		
+		Helper.check_entries(params,@figure)
 		erb :'/figures/show'
-	end# of post '/figures'
+	end
 
 
 	post '/figures/:id' do 
 		@figure = Figure.find(params[:id])
-		new_landmark = Landmark.create(name: params[:new_landmark])
-		@figure.landmarks << new_landmark	
-	  @figure.save
+		Helper.check_entries(params,@figure)
 		redirect :"/figures/#{@figure.id}"	
 	end
 
