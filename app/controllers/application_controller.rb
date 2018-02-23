@@ -12,17 +12,24 @@ class ApplicationController < Sinatra::Base
 				instance.name = params.first[1][:name]
 
 				if title_ids
-					title_ids.each {|id| instance.titles << Title.find(id)}			
-				elsif landmark_ids
-					landmark_ids.each {|id| instance.landmarks << Landmark.find(id)}
-				elsif new_landmark
-					instance.landmarks << Landmark.create(name: new_landmark)					
-				elsif !params[:title][:name].empty?
-					instance.titles << Title.find_or_create_by(name: params[:title][:name])
-				elsif !params[:landmark][:name].empty?
-					instance.landmarks << Landmark.find_or_create_by(name: params[:landmark][:name])
+					title_ids.each {|id| instance.titles << Title.find(id)}			   end
 
-				end# of if
+				if landmark_ids
+					landmark_ids.each {|id| instance.landmarks << Landmark.find(id)}
+				end
+
+				if new_landmark
+					instance.landmarks << Landmark.create(name: new_landmark)					
+				end
+
+				if params[:title] && !params[:title][:name].empty?
+					instance.titles << Title.find_or_create_by(name: params[:title][:name])
+				end
+
+				if params[:landmark] && !params[:landmark][:name].empty?
+					instance.landmarks << Landmark.find_or_create_by(name: params[:landmark][:name])
+				end
+
 			instance.save
 		end
 
